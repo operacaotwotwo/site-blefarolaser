@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curso Blefarolaser - Plataforma</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Nunito Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #f7f9fa;
+            overflow-x: hidden;
+        }
+
+        .header {
+            background: #FFFFFF;
+            padding: 16px 24px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+        }
+
+        .logo-text {
+            font-size: 18px;
+            font-weight: 800;
+            color: #355cc0;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .user-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: #32363b;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #355cc0, #009d43);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 72px;
+            bottom: 0;
+            width: 260px;
+            background: #FFFFFF;
+            box-shadow: 2px 0 8px rgba(0, 0, 0, 0.06);
+            padding: 24px 0;
+        }
+
+        .menu-item {
+            padding: 14px 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #707780;
+            text-decoration: none;
+            transition: all 0.3s;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .menu-item:hover {
+            background: #f7f9fa;
+            color: #355cc0;
+        }
+
+        .menu-item.active {
+            background: #ebf0ff;
+            color: #355cc0;
+            border-left: 4px solid #355cc0;
+            font-weight: 600;
+        }
+
+        .menu-icon {
+            width: 20px;
+            text-align: center;
+        }
+
+        .main-content {
+            margin-left: 260px;
+            margin-top: 72px;
+            padding: 32px;
+            min-height: calc(100vh - 72px);
+        }
+
+        .page-title {
+            font-size: 26px;
+            font-weight: 800;
+            color: #32363b;
+            margin-bottom: 8px;
+        }
+
+        .page-subtitle {
+            font-size: 14px;
+            color: #707780;
+            margin-bottom: 32px;
+        }
+
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .course-card {
+            background: #FFFFFF;
+            border-radius: .5rem;
+            overflow: hidden;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+            transition: transform 0.3s;
+        }
+
+        .course-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .course-thumbnail {
+            width: 100%;
+            height: 180px;
+            overflow: hidden;
+            position: relative;
+            background: linear-gradient(135deg, #355cc0, #5981e3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .course-thumbnail .course-icon {
+            font-size: 48px;
+            color: rgba(255,255,255,.25);
+        }
+
+        .play-button {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(53, 92, 192, 0.25);
+        }
+
+        .play-button i {
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #355cc0;
+            font-size: 22px;
+        }
+
+        .course-content {
+            padding: 20px;
+        }
+
+        .course-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: #32363b;
+            margin-bottom: 8px;
+        }
+
+        .course-info {
+            font-size: 13px;
+            color: #707780;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 12px;
+        }
+
+        .progress-bar-container {
+            width: 100%;
+            height: 6px;
+            background: #e6e9ed;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: #009d43;
+            border-radius: 3px;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+
+        .modal-overlay.show {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .modal {
+            background: #FFFFFF;
+            border-radius: .5rem;
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            transform: scale(0.9);
+            transition: transform 0.3s;
+        }
+
+        .modal-overlay.show .modal {
+            transform: scale(1);
+        }
+
+        .modal-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 24px;
+            background: #FEF3C7;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-icon i {
+            font-size: 36px;
+            color: #F59E0B;
+        }
+
+        .modal-title {
+            font-size: 22px;
+            font-weight: 800;
+            color: #32363b;
+            margin-bottom: 12px;
+        }
+
+        .modal-text {
+            font-size: 15px;
+            color: #707780;
+            line-height: 1.6;
+            margin-bottom: 24px;
+        }
+
+        .modal-button {
+            padding: 14px 32px;
+            background: #355cc0;
+            border: none;
+            border-radius: .25rem;
+            font-family: 'Nunito Sans', sans-serif;
+            font-weight: 700;
+            font-size: 14px;
+            color: #FFFFFF;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .modal-button:hover {
+            background: #2a4ea0;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar { transform: translateX(-100%); }
+            .main-content { margin-left: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo-text">Curso Blefarolaser</div>
+        <div class="user-info">
+            <span class="user-name" id="user-name-header">Aluno</span>
+            <div class="user-avatar" id="user-avatar">A</div>
+        </div>
+    </div>
+
+    <div class="sidebar">
+        <div class="menu-item active">
+            <i class="fa-solid fa-home menu-icon"></i>
+            <span>Início</span>
+        </div>
+        <div class="menu-item">
+            <i class="fa-solid fa-play-circle menu-icon"></i>
+            <span>Meus Cursos</span>
+        </div>
+        <div class="menu-item">
+            <i class="fa-solid fa-book menu-icon"></i>
+            <span>Materiais</span>
+        </div>
+        <div class="menu-item">
+            <i class="fa-solid fa-eye menu-icon"></i>
+            <span>Procedimentos</span>
+        </div>
+        <div class="menu-item">
+            <i class="fa-solid fa-certificate menu-icon"></i>
+            <span>Certificados</span>
+        </div>
+        <div class="menu-item">
+            <i class="fa-solid fa-comments menu-icon"></i>
+            <span>Fórum</span>
+        </div>
+        <div class="menu-item">
+            <i class="fa-solid fa-user menu-icon"></i>
+            <span>Perfil</span>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <h1 class="page-title">Bem-vindo à Plataforma!</h1>
+        <p class="page-subtitle">Seu Curso Blefarolaser começa aqui</p>
+
+        <div class="courses-grid">
+            <div class="course-card">
+                <div class="course-thumbnail">
+                    <i class="fa-solid fa-eye course-icon"></i>
+                    <div class="play-button">
+                        <i class="fa-solid fa-play"></i>
+                    </div>
+                </div>
+                <div class="course-content">
+                    <h3 class="course-title">Curso Blefarolaser</h3>
+                    <div class="course-info">
+                        <span><i class="fa-solid fa-layer-group"></i> 10 módulos</span>
+                        <span><i class="fa-solid fa-video"></i> 150 aulas</span>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal">
+        <div class="modal">
+            <div class="modal-icon">
+                <i class="fa-solid fa-hourglass-half"></i>
+            </div>
+            <h2 class="modal-title">Acesso em Ativação</h2>
+            <p class="modal-text">
+                Sua conta está sendo ativada! Em até <strong>3 horas</strong>
+                você terá acesso completo a todos os cursos e materiais da plataforma.
+                <br><br>
+                Você receberá um e-mail quando tudo estiver pronto.
+                Obrigado pela paciência! &#127891;
+            </p>
+            <button class="modal-button" onclick="closeModal()">Entendi</button>
+        </div>
+    </div>
+
+    <script>
+        var userEmail = localStorage.getItem('userEmail') || 'aluno@blefarolaser.com.br';
+        var firstName = userEmail.split('@')[0].charAt(0).toUpperCase() + userEmail.split('@')[0].slice(1);
+
+        document.getElementById('user-name-header').textContent = firstName;
+        document.getElementById('user-avatar').textContent = firstName.charAt(0).toUpperCase();
+
+        setTimeout(function() {
+            document.getElementById('modal').classList.add('show');
+        }, 1000);
+
+        function closeModal() {
+            document.getElementById('modal').classList.remove('show');
+        }
+
+        document.getElementById('modal').addEventListener('click', function(e) {
+            if (e.target.id === 'modal') closeModal();
+        });
+    </script>
+</body>
+</html>
